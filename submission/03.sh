@@ -7,7 +7,7 @@ decodeTX=$(bitcoin-cli -regtest decoderawtransaction $tx)
 
 pubkey1=$(echo $decodeTX | jq -r '.vin[0].txinwitness[1]')
 
-pubkey2= $(echo $decodeTX | jq -r '.vin[1].txinwitness[1]')
+pubkey2=$(echo $decodeTX | jq -r '.vin[1].txinwitness[1]')
 
 pubkey3=$(echo $decodeTX | jq -r '.vin[2].txinwitness[1]')
 
