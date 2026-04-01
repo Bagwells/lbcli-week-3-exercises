@@ -12,12 +12,13 @@ sats=20000000
 
 btc_amount=$(awk -v sats="$sats" 'BEGIN {printf "%.8f", sats/100000000}')
 
-decodeTX=$(bitcoin-cli  -regtest decoderawtransaction "$tx")
+decodeTX=$(bitcoin-cli -regtest decoderawtransaction "$tx")
 
 utxo_txid=$(echo "$decodeTX" | jq -r '.txid')
-utxo_vout=$(echo "$decodeTX" | jq -r '.vout[0].n')
+utxo_vout1=$(echo "$decodeTX" | jq -r '.vout[0].n')
+utxo_vout2=$(echo "$decodeTX" | jq -r '.vout[1].n')
 
-psbt=$(bitcoin-cli -regtest -named createpsbt inputs='''[{"txid":"'$utxo_txid'","vout":'$utxo_vout'}]''' outputs='''{"'$recipient'": '$btc_amount'}''')
+psbt=$(bitcoin-cli -regtest -named createpsbt inputs='''[{"txid":"'$utxo_txid'","vout":'$utxo_vout1'},{"txid":"'$utxo_txid'","vout":'$utxo_vout2'}]''' outputs='''{"'$recipient'": '$btc_amount'}''')
 
 
 echo $psbt
