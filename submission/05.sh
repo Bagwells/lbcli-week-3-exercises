@@ -10,7 +10,7 @@ recipient="2MvLcssW49n9atmksjwg2ZCMsEMsoj3pzUP"
 
 sats=20000000
 
-btc_amount=$(echo "$sats/100000000" | bc -l)
+btc_amount=$(awk -v sats="$sats" 'BEGIN {printf "%.8f", sats/100000000}')
 
 decodeTX=$(bitcoin-cli  -regtest decoderawtransaction "$tx")
 
