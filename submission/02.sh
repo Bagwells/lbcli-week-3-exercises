@@ -2,4 +2,6 @@
 
 nativeSegwitAddress=$(bitcoin-cli -regtest -rpcwallet=builderswallet getnewaddress "" "bech32")
 
-bitcoin-cli -regtest -rpcwallet=builderswallet getaddressinfo $nativeSegwitAddress | jp -r '.pubkey'
+pubKey=$(bitcoin-cli -regtest -rpcwallet=builderswallet getaddressinfo $nativeSegwitAddress | grep -o '"pubkey": "[^"]*"' | cut -d'"' -f4)
+
+echo $pubKey
